@@ -1,0 +1,40 @@
+# Copy to config.toml (git-ignored) and edit.
+
+state_path = "state/state.json"
+
+[profile]
+# Point this at your real resume in a git-ignored file, e.g. "profile/resume.md"
+resume_path = "sample_resume.md"
+
+[filters]
+title_include = ["data engineer", "data engineering", "data platform", "analytics engineer",
+                 "etl", "data infrastructure", "data pipeline"]
+title_exclude = ["senior", "staff", "principal", "manager", "phd"]
+locations = []          # empty = anywhere; e.g. ["boston", "new york", "remote"]
+# block_phrases = [...] # optional: override the default work-authorization blocklist
+
+[scoring]
+# "local": free, offline skill matching against your resume (no API key needed)
+# "claude": LLM scoring via the Claude API (needs ANTHROPIC_API_KEY and credits)
+# "auto":   Claude when available, local otherwise
+mode = "auto"
+model = "claude-haiku-4-5-20251001"
+threshold = 70          # alert on scores at or above this
+max_per_run = 40        # cost cap: max new Claude calls per run
+
+[notify]
+enabled = true
+server = "https://ntfy.sh"
+suppress_first_run = true
+
+# SimplifyJobs-format listings.json. Verify the current repo and branch on GitHub.
+[[simplify]]
+url = "https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/.github/scripts/listings.json"
+max_age_days = 14
+
+# Any Workday career site: paste the careers page URL.
+[[workday]]
+company = "NVIDIA"
+url = "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite"
+search = "intern"
+title_require = ["intern", "co-op", "coop"]
